@@ -4,8 +4,8 @@
 # ans = $(( n / i ))
 # echo $ans
 
-num1=100
-num2=20
+num1=10
+num2=2
 
 ans=$((num1 / num2))
 
