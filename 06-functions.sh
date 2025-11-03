@@ -11,6 +11,7 @@ VALIDATE()
         echo "error: nginx is not installed"
     else
         echo "installation of nginx is successful"
+    fi
 
 }
 dnf install nginx -y
