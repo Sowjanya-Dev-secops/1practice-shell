@@ -1,8 +1,3 @@
-The outer while loop is infinite:
-
-while [ $n -gt 2 ]
-A working version:
-
 #!/bin/bash
 echo -e "Enter Number : \c"
 read n
