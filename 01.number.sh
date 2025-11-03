@@ -1,7 +1,7 @@
 #!/bin/bash
-i=2
-n=20
-ans = $((n / i))
+num2=2
+num1=20
+ans=$((num1 / num2))
 echo $ans
 
 # num1=10
