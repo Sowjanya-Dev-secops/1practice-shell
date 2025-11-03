@@ -6,7 +6,6 @@ DOMAIN_NAME="msdevsecops.fun"
 aws ec2 run-instances \
     --image-id $AMI_ID \
     --instance-type "t3.micro" \
-    --key-name <your-key-pair-name> \
     --security-group-ids $SG_ID \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=test}]'
     --query 'Instances[0].InstanceId' \
