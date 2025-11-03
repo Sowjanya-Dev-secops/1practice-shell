@@ -17,7 +17,7 @@ VALIDATE(){
     if [ $1 -ne 0 ];then
         echo -e "$R error $N: $2 is not installed"
     else
-        echo "$G success:$N $2 installation is succecssful"
+        echo -e "$G success:$N $2 installation is succecssful"
     fi
 }
 for package in $@
