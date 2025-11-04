@@ -58,9 +58,11 @@ unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "unzip payment"
 
 pip3 install -r requirements.txt &>>$LOG_FILE
+VALIDATE $? "pip 3 install"
 
 cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service
 systemctl daemon-reload
 systemctl enable payment  &>>$LOG_FILE
 
 systemctl restart payment
+VALIDATE $? "restart payment"
