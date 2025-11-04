@@ -2,7 +2,7 @@
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
-current_path=$( PWD )
+SCRIPT_DIR=$PWD
 USERID=$( id -u )
 if [ $USERID -ne 0 ];then
     echo " please proceed with root user previliage"
@@ -22,7 +22,7 @@ VALIDATE(){
     fi
 }
 
-cp $current_path/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copy mongo repo file"
 
 dnf install mongodb-org -y 
