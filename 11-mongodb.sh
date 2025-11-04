@@ -35,8 +35,10 @@ VALIDATE $? "enable mongodb"
 systemctl start mongod &>>$LOG_FILE
 VALIDATE $? " start mongodb-org"
 
-sed -i '/s/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOG_FILE
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOG_FILE
 VALIDATE $? "conection to all ports"
+
+
 
 systemctl restart mongod &>>$LOG_FILE
 VALIDATE $? "reastart mongodb"
