@@ -6,11 +6,12 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-MONGODB_HOST=mongodb.msdevsecops.fun
 LOGS_FOLDER="/var/log/shell-roboshop"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
+MONGODB_HOST=mongodb.daws86s.fun
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-script/16-logs.log
+MYSQL_HOST=mysql.daws86s.fun
 
 mkdir -p $LOGS_FOLDER
 echo "Script started executed at: $(date)" | tee -a $LOG_FILE
@@ -29,39 +30,37 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
     fi
 }
 
-dnf install maven -y
-id roboshop
+dnf install maven -y &>>$LOG_FILE
+
+id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-    VALIDATE $? "creating system user"
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+    VALIDATE $? "Creating system user"
 else
-    echo -e "user already exist....$G Skipping$N"
+    echo -e "User already exist ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app 
-VALIDATE $? "creating directory"
+mkdir -p /app
+VALIDATE $? "Creating app directory"
 
-curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
-VALIDATE $? "Downloading the Application"
+curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$LOG_FILE
+VALIDATE $? "Downloading shipping application"
 
 cd /app 
-VALIDATE $? "changing directory"
+VALIDATE $? "Changing to app directory"
 
 rm -rf /app/*
-VALIDATE $? "remove old existing code"
+VALIDATE $? "Removing existing code"
 
-unzip /tmp/shipping.zip
-VALIDATE $? "unzip the shipping"
+unzip /tmp/shipping.zip &>>$LOG_FILE
+VALIDATE $? "unzip shipping"
 
-npm install
-VALIDATE $? "install dependencies"
+mvn clean package  &>>$LOG_FILE
+mv target/shipping-1.0.jar shipping.jar 
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
-VALIDATE $? "copy catalouge services"
-
 systemctl daemon-reload
-systemctl enable shipping 
-VALIDATE $? "enable shipping"
+systemctl enable shipping  &>>$LOG_FILE
 
 dnf install mysql -y  &>>$LOG_FILE
 
@@ -75,10 +74,3 @@ else
 fi
 
 systemctl restart shipping
-
-
-
-
-
-systemctl start shipping
-VALIDATE $? "start shipping"
