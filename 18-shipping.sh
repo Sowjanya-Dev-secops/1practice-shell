@@ -51,7 +51,7 @@ rm -rf /app/*
 VALIDATE $? "remove old existing code"
 
 unzip /tmp/shipping.zip
-VALIDATE $? "unzip the catalouge"
+VALIDATE $? "unzip the shipping"
 
 npm install
 VALIDATE $? "install dependencies"
