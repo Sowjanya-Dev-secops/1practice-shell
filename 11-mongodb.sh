@@ -6,6 +6,7 @@ current_path=$( PWD )
 USERID=$( id -u )
 if [ $USERID -ne 0 ];then
     echo " please proceed with root user previliage"
+    exit 1
 fi
 
 LOG_FOLDER="/var/log/1practie-shell"
