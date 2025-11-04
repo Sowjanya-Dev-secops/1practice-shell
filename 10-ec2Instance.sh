@@ -10,8 +10,10 @@ do
 
     if [ $instance != "frontend" ];then
         ip=$(  aws ec2 describe-instances  --instance-ids $instance_id --query 'Reservations[*].Instances[*].[PrivateIpAddress]' --output text)
+        RECORD_NAME="$instance.$DOMAIN_NAME"
     else
         ip=$(  aws ec2 describe-instances  --instance-ids $instance_id --query 'Reservations[*].Instances[*].[PublicIpAddress]' --output text)
+        RECORD_NAME="$instance.$DOMAIN_NAME"
     fi
     echo "$instance : $ip"
 
@@ -23,7 +25,7 @@ do
       {
         "Action": "UPSERT",
         "ResourceRecordSet": {
-          "Name": "'$DOMAIN_NAME'",
+          "Name": "'$RECORD_NAME'",
           "Type": "A",
           "TTL": 1,
           "ResourceRecords": [
