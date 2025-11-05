@@ -46,5 +46,7 @@ unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "unzip nginx code"
 
 cp $Script_Dir/nginx.conf /etc/nginx/nginx.conf &>>$LOG_FILE
+VALIDATE $? "copy nginx config"
+
 systemctl restart nginx &>>$LOG_FILE
 VALIDATE $? "restart nginx"
