@@ -29,24 +29,22 @@ VALIDATE(){ # functions receive inputs through args just like shell script args
     fi
 }
 
-dnf module disable nginx -y &>>$LOG_FILE
-dnf module enable nginx:1.24 -y &>>$LOG_FILE
-dnf install nginx -y &>>$LOG_FILE
-VALIDATE $? "Installing Nginx"
-
-systemctl enable nginx  &>>$LOG_FILE
-systemctl start nginx 
-VALIDATE $? "Starting Nginx"
+dnf module disable nginx -y &>>$log_file
+dnf module enable nginx:1.24 -y &>>$log_file
+dnf install nginx -y &>>$log_file
+VALIDATE $? "install nginx"
+systemctl enable nginx &>>$log_file
+VALIDATE $? "enabling nginx"
+systemctl start nginx &>>$log_file
 
 rm -rf /usr/share/nginx/html/* 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
+VALIDATE $? "remove deafault nginx"
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$log_file
+VALIDATE $? "downloading frontend code"
 cd /usr/share/nginx/html 
-unzip /tmp/frontend.zip &>>$LOG_FILE
-VALIDATE $? "Downloading frontend"
+unzip /tmp/frontend.zip &>>$log_file
+VALIDATE $? "unzip nginx code"
 
-rm -rf /etc/nginx/nginx.conf
-cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
-VALIDATE $? "Copying nginx.conf"
-
-systemctl restart nginx 
-VALIDATE $? "Restarting Nginx"
+cp $Script_Dir/nginx.conf /etc/nginx/nginx.conf &>>$log_file
+systemctl restart nginx &>>$log_file
+VALIDATE $? "restart nginx"
