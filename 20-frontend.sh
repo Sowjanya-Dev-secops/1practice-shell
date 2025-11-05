@@ -48,5 +48,5 @@ VALIDATE $? "unzip nginx code"
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOG_FILE
 VALIDATE $? "copy nginx config"
 
-systemctl restart nginx &>>$LOG_FILE
+systemctl restart nginx  &>>$LOG_FILE
 VALIDATE $? "restart nginx"
