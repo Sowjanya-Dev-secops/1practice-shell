@@ -45,7 +45,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>$LOG_FILE
 VALIDATE $? "unzip nginx code"
 
-cp $Script_Dir/nginx.conf /etc/nginx/nginx.conf &>>$LOG_FILE
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOG_FILE
 VALIDATE $? "copy nginx config"
 
 systemctl restart nginx &>>$LOG_FILE
